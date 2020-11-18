@@ -1,0 +1,15 @@
+.card{
+    height: 250px;
+    width: 150px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
