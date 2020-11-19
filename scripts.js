@@ -36,7 +36,7 @@ const startGame = () => {
     gameOver = false;
     let deck = new Deck();
     deck.shuffle();
-    playerDeck = new Deck([new Card("♠", "2")]);
+    playerDeck = new Deck(deck.cards.slice(0, deck.midPoint));
     computerDeck = new Deck(deck.cards.slice(deck.midPoint, deck.noOfCards));
     updateCount();
 }
@@ -45,6 +45,12 @@ const flipCards = () => {
     if (!gameOver) {
         const playerCard = playerDeck.cards.pop();
         const computerCard = computerDeck.cards.pop();
+        console.log(playerCard, computerCard);
+        playerCardElement.innerHTML = playerCard.value;
+        playerCardElement.dataset.value = `${playerCard.value} ${playerCard.suit}`
+        computerCardElement.dataset.value = `${computerCard.value} ${computerCard.suit}`
+
+        computerCardElement.innerHTML = computerCard.value;
         if (playerDeck.noOfCards == 0 || computerDeck.noOfCards == 0) {
             gameOver = true;
         } else {
