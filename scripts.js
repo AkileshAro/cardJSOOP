@@ -17,7 +17,7 @@ const CARD_WEIGHTS = {
     "A": 14
 }
 
-let playerDeck, computerDeck;
+let playerDeck, computerDeck, gameOver;
 
 const playerCardElement = document.querySelector(".player-card");
 const computerCardElement = document.querySelector(".computer-card");
@@ -33,6 +33,7 @@ deck.shuffle();
 playerCardElement.addEventListener('click', () => flipCards());
 
 const startGame = () => {
+    gameOver = false;
     let deck = new Deck();
     deck.shuffle();
     playerDeck = new Deck([new Card("♠", "2")]);
@@ -41,21 +42,23 @@ const startGame = () => {
 }
 
 const flipCards = () => {
-    const playerCard = playerDeck.cards.pop();
-    const computerCard = computerDeck.cards.pop();
-    if (playerDeck.noOfCards > 0 || computerDeck.noOfCards > 0) {
-        if (CARD_WEIGHTS[playerCard.value] > CARD_WEIGHTS[computerCard.value]) {
-            playerDeck.cards.unshift(playerCard);
-            playerDeck.cards.unshift(computerCard);
-        } else if (CARD_WEIGHTS[playerCard.value] < CARD_WEIGHTS[computerCard.value]) {
-            computerDeck.cards.unshift(playerCard);
-            computerDeck.cards.unshift(computerCard);
+    if (!gameOver) {
+        const playerCard = playerDeck.cards.pop();
+        const computerCard = computerDeck.cards.pop();
+        if (playerDeck.noOfCards == 0 || computerDeck.noOfCards == 0) {
+            gameOver = true;
         } else {
-            computerDeck.cards.unshift(computerCard);
-            playerDeck.cards.unshift(playerCard);
+            if (CARD_WEIGHTS[playerCard.value] > CARD_WEIGHTS[computerCard.value]) {
+                playerDeck.cards.unshift(playerCard);
+                playerDeck.cards.unshift(computerCard);
+            } else if (CARD_WEIGHTS[playerCard.value] < CARD_WEIGHTS[computerCard.value]) {
+                computerDeck.cards.unshift(playerCard);
+                computerDeck.cards.unshift(computerCard);
+            } else {
+                computerDeck.cards.unshift(computerCard);
+                playerDeck.cards.unshift(playerCard);
+            }
         }
-    } else {
-        console.log("Won");
     }
 
     playerCount.innerText = playerDeck.noOfCards;
