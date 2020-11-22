@@ -32,10 +32,17 @@ export class Card {
     }
 
     get color() {
-        return this.suit == "♠" || this.suit == "♣" ? "black" : "red";
+        return (this.suit == "♠" || this.suit == "♣") ? "black" : "red";
     }
 
-    
+    setHTML() {
+        const card = document.createElement('div');
+        card.innerText = this.value;
+        card.classList.add("card", this.color);
+        card.dataset.value = `${this.suit} `;
+        return card;
+    }
+
 }
 
 const freshSet = () => {
